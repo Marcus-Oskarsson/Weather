@@ -1,0 +1,115 @@
+/* Återkommande färger */
+:root {
+  --main-background-color: #576490;
+  --secondary-background-color: #839788;
+  --main-text-color: #071e22;
+  --secondary-text-color: #f5e3e0;
+  --correct-color: #70ae6e;
+  --incorrect-color: #9e2a2b;
+}
+
+h1,
+h2,
+h3,
+p,
+button {
+  font-family: "Merriweather", serif;
+}
+
+#hamburger > i {
+  font-size: 32px;
+}
+
+/* För dropdown-menyn */
+.navigation:hover,
+.navigation:focus {
+  background-color: var(--secondary-text-color);
+  color: var(--main-text-color);
+  text-decoration: none;
+  outline: none;
+}
+
+nav {
+  position: absolute;
+  width: 100%;
+  visibility: hidden;
+  z-index: 1;
+  top: 96px;
+}
+
+.navigation {
+  display: block;
+  padding: 1.4rem 1.6rem;
+  background-color: var(--main-background-color);
+  color: var(--secondary-text-color);
+  border-bottom: 1px solid var(--main-text-color);
+}
+
+/* Navigation inuti hamburgaren */
+.nav-active {
+  visibility: visible;
+}
+
+/* Hamburgaren */
+#hamburger {
+  color: black;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 32px;
+  right: 32px;
+}
+
+header {
+  height: 96px;
+  display: flex;
+}
+
+.header-title {
+  display: block;
+  width: min-content;
+  margin-top: 32px;
+  margin-left: 32px;
+}
+
+@media (min-width: 998px) {
+  nav {
+    visibility: visible;
+    position: static;
+    /* background-color: rgba(255, 255, 255, 90%);
+    height: 96px; */
+  }
+
+  nav > ul {
+    position: static;
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
+  nav > ul > li {
+    margin-right: 32px;
+  }
+
+  .navigation {
+    border-bottom: none;
+    background-color: transparent;
+  }
+
+  .navigation:hover,
+  .navigation:focus {
+    background-color: unset;
+    outline: 1px solid black;
+  }
+
+  /* Markera nuvarande sida */
+  .active {
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  #hamburger {
+    display: none;
+  }
+}

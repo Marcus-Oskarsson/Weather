@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+
+/* Återkommande färger */
+:root {
+  --main-background-color: #576490;
+  --secondary-background-color: #839788;
+  --main-text-color: #071e22;
+  --secondary-text-color: #f5e3e0;
+  --correct-color: #70ae6e;
+  --incorrect-color: #9e2a2b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--main-text-color);
+}
+
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+button {
+  font-family: "Merriweather", serif;
+}
+
+h1 {
+  font-size: 32px;
+}

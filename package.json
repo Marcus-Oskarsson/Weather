@@ -1,0 +1,19 @@
+{
+  "name": "projekt",
+  "version": "1.0.0",
+  "description": "Till kursen native javascript",
+  "scripts": {
+    "prelint": "node buildScripts/startMessage.js",
+    "lint": "esw src buildScripts --color",
+    "lint:watch": "npm run lint -- --watch"
+  },
+  "author": "Marcus",
+  "license": "MIT",
+  "devDependencies": {
+    "chalk": "4.1.0",
+    "eslint": "7.21.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-watch": "7.0.0"
+  },
+  "type": "module"
+}

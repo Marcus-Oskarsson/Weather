@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./styles/hamburger.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="./styles/weather.css" />
+    <link
+      href="./assets/weather-icon.png"
+      rel="icon"
+      size="18x18"
+      type="image/png"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="./code/hamburger.js" type="module"></script>
+    <script src="./code/weather.js" type="module"></script>
+    <title>Weather</title>
+  </head>
+  <body>
+    <header>
+      <a class="header-title" href="./index.html">
+        <h1>Marcus</h1>
+      </a>
+      <nav>
+        <ul>
+          <li>
+            <a class="navigation active" href="./index.html">Home</a>
+          </li>
+          <li>
+            <a class="navigation" href="./pages/quiz.html">Quiz</a>
+          </li>
+          <li>
+            <a class="navigation" href="./pages/cities.html">Cities</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+      <a id="hamburger" role="button">
+        <i class="fa fa-bars"></i>
+      </a>
+    </header>
+    <main id="main">
+      <form action="#" id="search-city">
+        <!-- <label for="city-search">Stad</label> -->
+        <input id="city-search" type="text" placeholder="Stad" />
+        <!-- <label for="remember">Kom ihåg</label>
+        <input type="checkbox" name="remember" id="remember" /> -->
+        <button id="city-search-btn" type="submit">Search</button>
+      </form>
+      <video autoplay class="hero" id="video" loop muted></video>
+      <article id="weather-article"></article>
+    </main>
+  </body>
+</html>

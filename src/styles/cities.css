@@ -1,0 +1,88 @@
+.hidden {
+    visibility: hidden;
+}
+
+.citiesContainer {
+    display: flex;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    padding: 48px 0;
+}
+
+.citiesContainer .card {
+    width: 100%;
+    margin: 24px 0;
+}
+
+.card .card-header {
+    display: flex;
+}
+
+.card-header .h2 {
+    flex-grow: 1;
+}
+
+.card-header i {
+    margin-right: 10px;
+    align-self: center;
+    cursor: pointer;
+}
+
+.search-form {
+    flex-wrap: wrap;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.search-form input,
+.search-form label {
+    max-width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.search-form button {
+    margin: 12px 12px 12px;
+}
+
+@media (min-width: 580px) {
+    .citiesContainer {
+        display: flex;
+        width: 90%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .citiesContainer .card {
+        width: 45%
+    }
+
+    .search-form input,
+    .search-form label {
+        max-width: 70%;
+    }
+}
+
+@media (min-width: 796px) {
+    .citiesContainer {
+        display: flex;
+        width: 90%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .citiesContainer .card {
+        width: 30%
+    }
+
+    header h1 {
+        margin-left: 48px;
+    }
+
+    .search-form input,
+    .search-form label {
+        max-width: 50%;
+    }
+}
