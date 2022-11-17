@@ -18,12 +18,11 @@ import {
 
 createCategoryList();
 
-/**
- * @function cleanCanvas
- * @description Tar bort alla element från game-board
- */
 function cleanCanvas(...keep) {
   let gameBoard = getElementById("game-board");
+
+  // Tidigare
+  // removeNodesFrom(gameBoard)(...gameBoard.children)
 
   let childrenToRemove = [...gameBoard.children];
   if (keep.length > 0 && childrenToRemove) {
@@ -35,10 +34,6 @@ function cleanCanvas(...keep) {
   removeNodesFrom(gameBoard)(...childrenToRemove);
 }
 
-/**
- * @function createCategoryList
- * @description Skapar en lista med alla kategorier och ritar ut dem på game-board
- */
 async function createCategoryList() {
   let gameBoard = getElementById("game-board");
   let appendToGameBoard = appendChildToElement(gameBoard);
@@ -120,21 +115,10 @@ function pickNumberOfQuestions(id) {
   appendChildToElement(gameBoard)(form, backGroundImage);
 }
 
-/**
- * @function checkAnswer
- * @param {string} correctAnswer - Svaret som användarens svar ska jämföras med
- * @param {string} playerAnswer - Användarens svar
- * @return {boolean}
- */
 function checkAnswer(correctAnswer, playerAnswer) {
   return decodeHTMLEntities(correctAnswer) === decodeHTMLEntities(playerAnswer);
 }
 
-/**
- * @function shuffle
- * @param {[]} array - Svaret som användarens svar ska jämföras med
- * @return {[]} newArray - En ny, blandad, array
- */
 function shuffle(array) {
   let newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -144,14 +128,10 @@ function shuffle(array) {
   return [...newArray];
 }
 
-/**
- * @function createQuestionForm
- * @param {object} question
- * @param {function} nextQuestion
- */
 function createQuestionForm(question, nextQuestion) {
   let imageToKeepOnCanvas = getElementById("background-hero-img");
   cleanCanvas(imageToKeepOnCanvas);
+
   let alternatives = getQuestionAnswerAlternatives(question);
   let gameBoard = getElementById("game-board");
   let questionWrapper = createElement("div");
@@ -179,11 +159,6 @@ function createQuestionForm(question, nextQuestion) {
   appendChildToElement(gameBoard)(questionWrapper);
 }
 
-/**
- * @function decodeHTMLEntities
- * @param {string} text
- * @returns {string}
- */
 function decodeHTMLEntities(text) {
   // Hämtad från:
   //  https://javascript.plainenglish.io/here-are-2-javascript-approaches-to-encode-decode-html-entities-52989bb12031
@@ -192,34 +167,16 @@ function decodeHTMLEntities(text) {
   return textArea.value;
 }
 
-/**
- * @function getQuestionAnswerAlternatives
- * @param {object} question
- * @returns {shuffle}
- */
 function getQuestionAnswerAlternatives(question) {
   return shuffle([question.correct_answer, ...question.incorrect_answers]);
 }
 
-/**
- * @function roundWithUpdate
- * @param {function} nextFn - Funktion som startar nästa fråga
- */
 function roundWithUpdate(nextFn) {
-  /**
-   * @function playRound
-   * @param {object} questionObject
-   */
   return function playRound(questionObject) {
     createQuestionForm(questionObject, nextFn);
   };
 }
 
-/**
- * @function questionFeedback
- * @param {object} question
- * @param {Array.<HTMLElement>} allBtns
- */
 function questionFeedback(question, allBtns) {
   allBtns.forEach((btn) => {
     let addClassToBtn = addClassToElement(btn);
@@ -235,7 +192,8 @@ function trackCurrent(result) {
   return function updateCurrentResult(points) {
     result["points"] += points;
     result["totalQuestions"] += 1;
-    // Sets page title with result
+
+    // Sets page title with current points
     document.title = `Quiz - Points: ${result.points} / ${result.totalQuestions}`;
     return result;
   };
@@ -255,12 +213,6 @@ function summarize(result) {
   appendChildToElement(gameBoard)(resultWrapper);
 }
 
-/**
- * @function awardPoints
- * @param {string} correctAnswer
- * @param {string} playerAnswer
- * @returns
- */
 function awardPoints(correctAnswer, playerAnswer) {
   return checkAnswer(correctAnswer, playerAnswer) ? 1 : 0;
 }
