@@ -1,8 +1,10 @@
 // import categories from "./categories.json.js";
+import categories from "./api/categories.json.js";
 import { getQuestions, getCategories } from "./api/quizApi.js";
 import { showChart } from "./chart.js";
 import {
   addActionToElement,
+  addClickActionToElement,
   addAttributeToElement,
   addClassToElement,
   appendChildToElement,
@@ -20,9 +22,17 @@ createCategoryList();
  * @function cleanCanvas
  * @description Tar bort alla element från game-board
  */
-function cleanCanvas() {
+function cleanCanvas(...keep) {
   let gameBoard = getElementById("game-board");
-  removeNodesFrom(gameBoard)(...gameBoard.children);
+
+  let childrenToRemove = [...gameBoard.children];
+  if (keep.length > 0 && childrenToRemove) {
+    childrenToRemove = childrenToRemove.filter(
+      (child) => !keep.includes(child)
+    );
+  }
+
+  removeNodesFrom(gameBoard)(...childrenToRemove);
 }
 
 /**
@@ -40,7 +50,7 @@ async function createCategoryList() {
     let image = createElement("img");
     addClassToElement(image)("card-image");
 
-    addActionToElement(categoryCard)(() => {
+    addClickActionToElement(categoryCard)(() => {
       pickNumberOfQuestions(category.id);
     });
     addAttributeToElement(categoryCard)("id")(category.id);
@@ -53,33 +63,51 @@ async function createCategoryList() {
   });
 }
 
-function handleChooseNumberOfQuestions(e, ...options) {
+function handleChooseNumberOfQuestions(e, options) {
   e.preventDefault();
-  startTriviaGame(...options);
+  startQuizGame(options);
 }
 
+/**
+ * Kontrollerar att antalet frågor är inom ramarna
+ */
 function handleInput(e) {
   let value = e.target.value;
   if (value < 1) {
     e.target.value = 1;
   }
+  if (value > 10) {
+    e.target.value = 10;
+  }
 }
 
 function pickNumberOfQuestions(id) {
   cleanCanvas();
+
+  let backGroundImage = createElement("img");
   let gameBoard = getElementById("game-board");
   let form = createElement("form");
   let label = createElementWithText("label")("How many questions?");
   let input = createElement("input");
-  let addAttributToInput = addAttributeToElement(input);
 
+  let currentCat = categories.find((cat) => cat.id === id);
+  let addAttributeToImage = addAttributeToElement(backGroundImage);
+  addAttributeToImage("src")(currentCat.image);
+  addAttributeToImage("alt")(currentCat.name);
+  addAttributeToImage("id")("background-hero-img");
+  addClassToElement(backGroundImage)("background-hero-img");
+
+  addClassToElement(form)("number-of-questions-form");
+
+  let addAttributToInput = addAttributeToElement(input);
   addAttributeToElement(label)("for")("number-of-questions");
   addAttributToInput("type")("number");
   addAttributToInput("id")("number-of-questions");
   addAttributToInput("min")("1");
   input.value = 1;
 
-  input.addEventListener("change", handleInput);
+  // input.addEventListener("change", handleInput);
+  addActionToElement(input)("change")(handleInput);
 
   let btn = createButtonWithTextAndAction("Continue")((e) => {
     handleChooseNumberOfQuestions(e, {
@@ -87,8 +115,9 @@ function pickNumberOfQuestions(id) {
       amount: Number(input.value),
     });
   });
+
   appendChildToElement(form)(label, input, btn);
-  appendChildToElement(gameBoard)(form);
+  appendChildToElement(gameBoard)(form, backGroundImage);
 }
 
 /**
@@ -121,7 +150,8 @@ function shuffle(array) {
  * @param {function} nextQuestion
  */
 function createQuestionForm(question, nextQuestion) {
-  cleanCanvas();
+  let imageToKeepOnCanvas = getElementById("background-hero-img");
+  cleanCanvas(imageToKeepOnCanvas);
   let alternatives = getQuestionAnswerAlternatives(question);
   let gameBoard = getElementById("game-board");
   let questionWrapper = createElement("div");
@@ -205,6 +235,8 @@ function trackCurrent(result) {
   return function updateCurrentResult(points) {
     result["points"] += points;
     result["totalQuestions"] += 1;
+    // Sets page title with result
+    document.title = `Quiz - Points: ${result.points} / ${result.totalQuestions}`;
     return result;
   };
 }
@@ -233,7 +265,7 @@ function awardPoints(correctAnswer, playerAnswer) {
   return checkAnswer(correctAnswer, playerAnswer) ? 1 : 0;
 }
 
-async function startTriviaGame(options = {}) {
+async function startQuizGame(options = {}) {
   let questions = await getQuestions(options);
   let currentQuestionIdx = 0;
   let currentQuestion = questions[currentQuestionIdx];
@@ -263,6 +295,7 @@ async function startTriviaGame(options = {}) {
       btn.removeEventListener("click", nextQuestion);
     });
 
+    // Tid mellan frågorna så att min hinner få feedback på sitt svar.
     setTimeout(() => {
       if (currentQuestionIdx < questions.length) {
         playCurrentRound(currentQuestion);

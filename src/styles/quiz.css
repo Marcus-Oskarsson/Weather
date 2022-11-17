@@ -45,6 +45,21 @@ img {
   max-width: 100%;
 }
 
+.background-hero-img {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  /* filter: brightness(80%); */
+}
+
+.number-of-questions-form {
+  padding: 96px 24px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #efefef;
+}
+
 #game-board {
   display: flex;
   flex-wrap: wrap;
@@ -61,28 +76,30 @@ img {
   display: flex;
   flex-direction: column;
   font-size: 24px;
-  width: 300px;
+  width: 400px;
   align-items: center;
 }
 
 #game-board > form > label {
-  margin-bottom: 24px;
+  margin-bottom: 48px;
 }
 
 #game-board > form > input {
-  font-size: inherit;
-  width: 120px;
+  width: 150px;
+  padding: 10px 0;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 24px;
+  margin-bottom: 48px;
   text-align: center;
+  font-size: 32px;
 }
 
 #game-board > form > button {
   font-size: inherit;
   padding: 12px;
+  min-width: 150px;
   color: #efefef;
-  background-color: green;
+  background-color: brown;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -132,7 +149,7 @@ img {
 }
 
 .card img {
-  height: 300px;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -204,10 +221,6 @@ img {
     width: 33%;
   }
 
-  .card img {
-    height: 200px;
-  }
-
   #game-board > .card:nth-last-of-type(2),
   #game-board > .card:nth-last-of-type(3),
   #game-board > .card:nth-last-of-type(4) {
@@ -218,10 +231,6 @@ img {
 @media (min-width: 998px) {
   .card {
     width: 19%;
-  }
-
-  .card img {
-    max-height: auto;
   }
 
   .chart-wrapper {

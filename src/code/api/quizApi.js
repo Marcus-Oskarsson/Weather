@@ -1,5 +1,8 @@
-import { API_TRIVIA_BASE_URL } from "./reusables.js";
-import { API_TRIVIA_CATEGORIES } from "./reusables.js";
+import {
+  API_TRIVIA_BASE_URL,
+  API_TRIVIA_CATEGORIES,
+  API_TRIVIA_SESSION_URL,
+} from "./reusables.js";
 import categories from "./categories.json.js";
 import stats from "./statsServer.json.js";
 import { startLoading, stopLoading } from "../loading.js";
@@ -54,7 +57,31 @@ export async function getCategories() {
 async function get(url) {
   startLoader();
   try {
-    let response = await fetch(API_TRIVIA_BASE_URL + url);
+    let tokenStr = localStorage.getItem("sessionToken");
+    let tokenData = JSON.parse(tokenStr);
+
+    if (tokenData && new Date(tokenData.expire) > new Date()) {
+      let sessionToken = tokenData.token;
+      var response = await fetch(
+        `${API_TRIVIA_BASE_URL}${url}&token=${sessionToken}`
+      );
+    } else {
+      let tokenResponse = await fetch(API_TRIVIA_SESSION_URL);
+      let tokenData = await tokenResponse.json();
+      let sessionToken = tokenData.token;
+      const SIX_HOURS = 21600000;
+
+      let expire = new Date(new Date().getTime() + SIX_HOURS);
+      localStorage.setItem(
+        "sessionToken",
+        JSON.stringify({ token: sessionToken, expire })
+      );
+
+      var response = await fetch(
+        `${API_TRIVIA_BASE_URL}${url}&token=${sessionToken}`
+      );
+    }
+
     let data = await response.json();
     checkForOtherErrors(data.response_code);
     return onSuccess(data);

@@ -23,7 +23,7 @@ export async function deleteCity(cityId) {
   return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
     async function () {
       let options = buildHeader("DELETE");
-      return await fetch(`${API_URL}/${cityId}`, options);
+      return fetch(`${API_URL}/${cityId}`, options);
     }
   );
 }
@@ -77,7 +77,7 @@ function handleErrorFromFetchFunction(errorHandleElement) {
       }
       return response;
     } catch (error) {
-      console.log(error);
+      console.log(error); // eslint-disable-line no-console
       errorHandleElement.textContent = error;
     }
   };

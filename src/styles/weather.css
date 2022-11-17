@@ -33,12 +33,14 @@ img {
 }
 
 article {
-  width: 370px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding: 48px 12px;
   display: flex;
   flex-wrap: wrap;
+  flex-grow: 1;
+  max-height: calc(100vh - 188px);
 }
 
 form {
@@ -46,7 +48,7 @@ form {
   margin-right: auto;
   padding: 24px 12px;
   background-color: rgba(14, 14, 14, 0.45);
-  width: 370px;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -60,6 +62,8 @@ form > input {
   /* opacity: 90%; */
   background-color: rgba(0, 0, 0, 0);
   color: #efefef;
+  flex-grow: 1;
+  max-width: 80%;
 }
 
 form > button {
@@ -84,7 +88,7 @@ main {
   flex-direction: column;
   position: relative;
   height: 100vh;
-  justify-content: center;
+  justify-content: top;
 }
 
 .hero {
@@ -175,4 +179,26 @@ article > p:first-of-type {
 .thunderstorm {
   background-color: var(--thunderstorm-bg-color);
   color: var(--thunderstorm-text-color);
+}
+
+@media (min-width: 598px) {
+  main {
+    justify-content: center;
+  }
+
+  article {
+    flex-grow: unset;
+  }
+
+  article,
+  form {
+    width: 60%;
+  }
+}
+
+@media (min-width: 998px) {
+  article,
+  form {
+    width: 550px;
+  }
 }

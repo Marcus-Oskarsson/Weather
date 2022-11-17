@@ -5,9 +5,21 @@ import {
 } from "./reusables.js";
 
 export async function getWeather(city) {
-  return await (await fetch(WEATHER_TODAY(city))).json();
+  try {
+    let weather = await fetch(WEATHER_TODAY(city));
+    if (weather.status !== 200) throw new Error(weather.statusText);
+    return onSuccess(weather);
+  } catch (error) {
+    // Sätter om sparade staden så man inte laddar om och försöker hämta samma fel igen.
+    localStorage.setItem("weather-city", "Göteborg");
+    document.getElementById("city-search").setAttribute("placeholder", error);
+  }
 }
 
 export async function getWeatherForecast(city) {
   return await (await fetch(WEATHER_FORECAST(city))).json();
+}
+
+async function onSuccess(weather) {
+  return await weather.json();
 }

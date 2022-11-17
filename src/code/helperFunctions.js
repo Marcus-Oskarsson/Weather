@@ -41,19 +41,33 @@ function addClassToElement(element) {
 }
 
 /**
+ * @function addClickActionToElement
+ * @param {HTMLElement} element
+ */
+function addClickActionToElement(element) {
+  return addActionToElement(element)("click");
+}
+
+/**
  * Lägger till en klick-lyssnare och funktion till ett element
  * @function addActionToElement
  * @param {HTMLElement} elemenet - elementet som ska få en lyssnare
  */
-function addActionToElement(elemenet) {
+function addActionToElement(element) {
   /**
-   * @function addAction
-   * @param {function} action - action - Funktionen som ska triggas vid klick
-   * @returns {HTMLElement}
+   * @function
+   * @param {string} event - Vilket element som ska lyssnas efter
    */
-  return function addAction(action) {
-    elemenet.addEventListener("click", action);
-    return elemenet;
+  return function listenFor(event) {
+    /**
+     * @function performAction
+     * @param {function} action - action - Funktionen som ska triggas vid klick
+     * @returns {HTMLElement}
+     */
+    return function performAction(action) {
+      element.addEventListener(event, action);
+      return element;
+    };
   };
 }
 
@@ -82,7 +96,7 @@ function appendChildToElement(elementWrapper) {
  */
 function createButtonWithTextAndAction(text) {
   let button = createElementWithText("button")(text);
-  return addActionToElement(button);
+  return addClickActionToElement(button);
 }
 
 /**
@@ -168,6 +182,7 @@ function removeNodesFrom(parent) {
 
 export {
   addActionToElement,
+  addClickActionToElement,
   addAttributeToElement,
   addClassToElement,
   appendChildToElement,

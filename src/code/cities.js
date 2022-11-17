@@ -153,6 +153,7 @@ function displayCitiesAt(cities = []) {
     wrapperElement.innerHTML = "";
     addClassToElement(wrapperElement)("citiesContainer");
     let createCard = createCityCard(wrapperElement);
+    console.log("typ: ", typeof cities, " cities: ", cities);
     cities.forEach(function (city) {
       createCard(city);
     });
@@ -166,6 +167,7 @@ function displayCitiesAt(cities = []) {
  */
 async function fetchCities() {
   let cities = await getCities();
+  console.log("cities: ", cities, " ", typeof cities);
   let citiesWrapper = getElementById("cities");
   displayCitiesAt(cities)(citiesWrapper);
   return cities;
@@ -214,6 +216,7 @@ function main() {
 }
 
 async function searchCities() {
+  let cityNameSearch = getElementById("cityNameSearch");
   let citySearchString = cityNameSearch.value;
   let cities = await getCity(citySearchString);
   let citiesWrapper = getElementById("cities");
