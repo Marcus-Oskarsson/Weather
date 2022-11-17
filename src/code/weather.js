@@ -45,7 +45,6 @@ function getCityFromLocalStorage() {
 }
 
 function getHourAndMinutes(date) {
-  console.log("here");
   return `${("0" + date.getHours()).slice(-2)}:${(
     "0" + date.getMinutes()
   ).slice(-2)}`;
