@@ -89,9 +89,11 @@ function fetchWeather(city) {
 
   Promise.all([weather, weatherForecast]).then((values) => {
     printWeather(...values);
+
+    const ONE_MINUTE = 60000;
     let i = setInterval(() => {
       printWeather(...values);
-    }, 60000);
+    }, ONE_MINUTE);
   });
 }
 
