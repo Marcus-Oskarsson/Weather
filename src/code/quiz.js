@@ -18,20 +18,9 @@ import {
 
 createCategoryList();
 
-function cleanCanvas(...keep) {
+function cleanCanvas() {
   let gameBoard = getElementById("game-board");
-
-  // Tidigare
-  // removeNodesFrom(gameBoard)(...gameBoard.children)
-
-  let childrenToRemove = [...gameBoard.children];
-  if (keep.length > 0 && childrenToRemove) {
-    childrenToRemove = childrenToRemove.filter(
-      (child) => !keep.includes(child)
-    );
-  }
-
-  removeNodesFrom(gameBoard)(...childrenToRemove);
+  gameBoard.innerHTML = "";
 }
 
 async function createCategoryList() {
@@ -99,7 +88,8 @@ function pickNumberOfQuestions(id) {
   addAttributToInput("type")("number");
   addAttributToInput("id")("number-of-questions");
   addAttributToInput("min")("1");
-  input.value = 1;
+  addAttributToInput("value")("1");
+  // input.value = 1;
 
   // input.addEventListener("change", handleInput);
   addActionToElement(input)("change")(handleInput);
@@ -130,10 +120,15 @@ function shuffle(array) {
 
 function createQuestionForm(question, nextQuestion) {
   let imageToKeepOnCanvas = getElementById("background-hero-img");
-  cleanCanvas(imageToKeepOnCanvas);
+  let gameBoard = getElementById("game-board");
+  let childrenToRemove = [...gameBoard.children];
+
+  childrenToRemove = childrenToRemove.filter(
+    (child) => child != imageToKeepOnCanvas
+  );
+  removeNodesFrom(gameBoard)(...childrenToRemove);
 
   let alternatives = getQuestionAnswerAlternatives(question);
-  let gameBoard = getElementById("game-board");
   let questionWrapper = createElement("div");
   let questionCategoryHeader = createElementWithText("h2")(question.category);
   let questionParagraph = createElementWithText("p")(

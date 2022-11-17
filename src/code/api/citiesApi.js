@@ -4,41 +4,33 @@
 import { API_URL_CITIES as API_URL } from "./reusables.js";
 
 export async function getCities() {
-  return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
-    async function () {
-      return (await fetch(API_URL)).json();
-    }
-  );
+  return handleErrorFromFetchFunction()(async function () {
+    return (await fetch(API_URL)).json();
+  });
 }
 
 export async function getCity(citySearchString) {
-  return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
-    async function () {
-      return (await fetch(`${API_URL}?name=${citySearchString}`)).json();
-    }
-  );
+  return handleErrorFromFetchFunction()(async function () {
+    return (await fetch(`${API_URL}?name=${citySearchString}`)).json();
+  });
 }
 
 export async function deleteCity(cityId) {
-  return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
-    async function () {
-      let options = buildHeader("DELETE");
-      return fetch(`${API_URL}/${cityId}`, options);
-    }
-  );
+  return handleErrorFromFetchFunction()(async function () {
+    let options = buildHeader("DELETE");
+    return fetch(`${API_URL}/${cityId}`, options);
+  });
 }
 
 export async function createCity({ cityName, cityPopulation }) {
-  return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
-    async function () {
-      let options = buildHeader("POST", cityName, cityPopulation);
-      return (await fetch(`${API_URL}`, options)).json();
-    }
-  );
+  return handleErrorFromFetchFunction()(async function () {
+    let options = buildHeader("POST", cityName, cityPopulation);
+    return (await fetch(`${API_URL}`, options)).json();
+  });
 }
 
 export async function changeCity({ cityId, cityName, cityPopulation }) {
-  return handleErrorFromFetchFunction(document.getElementById("errorMsg"))(
+  return handleErrorFromFetchFunction()(
     async function () {
       let options = buildHeader("PATCH", cityName, cityPopulation);
       return (await fetch(`${API_URL}/${cityId}`, options)).json();
@@ -78,7 +70,6 @@ function handleErrorFromFetchFunction(errorHandleElement) {
       return response;
     } catch (error) {
       console.log(error); // eslint-disable-line no-console
-      errorHandleElement.textContent = error;
     }
   };
 }

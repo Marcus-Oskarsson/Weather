@@ -46,7 +46,7 @@ function addWeatherToElement(elementWrapper) {
       appendChildToElement(elementWrapper)(header, feelsLike, temp, wind);
     } catch (error) {
       let [header, errorParagraph] = createParagraphsWithText(
-        error,
+        "Någonting gick fel!",
         "Kontrollera stavningen på staden och ladda sedan om sidan för att försöka igen."
       );
       addClassToElement(header)("h3");
