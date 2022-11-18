@@ -80,14 +80,14 @@ function pickNumberOfQuestions(id) {
   addAttributeToImage("alt")(currentCat.name);
   addAttributeToImage("id")("background-hero-img");
   addClassToElement(backGroundImage)("background-hero-img");
-
   addClassToElement(form)("number-of-questions-form");
+  addAttributeToElement(label)("for")("number-of-questions");
 
   let addAttributToInput = addAttributeToElement(input);
-  addAttributeToElement(label)("for")("number-of-questions");
   addAttributToInput("type")("number");
   addAttributToInput("id")("number-of-questions");
   addAttributToInput("min")("1");
+  addAttributToInput("max")("10");
   addAttributToInput("value")("1");
   // input.value = 1;
 
@@ -103,6 +103,7 @@ function pickNumberOfQuestions(id) {
 
   appendChildToElement(form)(label, input, btn);
   appendChildToElement(gameBoard)(form, backGroundImage);
+  form.scrollIntoView({ behavior: "smooth" });
 }
 
 function checkAnswer(correctAnswer, playerAnswer) {
@@ -121,9 +122,8 @@ function shuffle(array) {
 function createQuestionForm(question, nextQuestion) {
   let imageToKeepOnCanvas = getElementById("background-hero-img");
   let gameBoard = getElementById("game-board");
-  let childrenToRemove = [...gameBoard.children];
 
-  childrenToRemove = childrenToRemove.filter(
+  let childrenToRemove = [...gameBoard.children].filter(
     (child) => child != imageToKeepOnCanvas
   );
   removeNodesFrom(gameBoard)(...childrenToRemove);
@@ -152,6 +152,7 @@ function createQuestionForm(question, nextQuestion) {
     ...allAnswers
   );
   appendChildToElement(gameBoard)(questionWrapper);
+  questionWrapper.scrollIntoView({ behavior: "smooth" });
 }
 
 function decodeHTMLEntities(text) {
