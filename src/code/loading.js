@@ -11,7 +11,9 @@ let div1 = createElement("div");
 let div2 = createElement("div");
 let div3 = createElement("div");
 let div4 = createElement("div");
-let gameBoard = getElementById("game-board");
+
+// Quick fix for other pages and element id's
+let gameBoard = getElementById("game-board") || getElementById("stats-board");
 
 export function startLoading() {
   addClassToElement(wrapper)(
@@ -25,6 +27,5 @@ export function startLoading() {
 }
 
 export function stopLoading() {
-  let gameBoard = getElementById("game-board");
   removeNodesFrom(gameBoard)(wrapper);
 }
