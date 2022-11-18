@@ -1,0 +1,22 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+main section {
+  margin: auto;
+}
+
+@media (min-width: 998px) {
+  main {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  main section {
+    width: 30%;
+    margin-left: unset;
+    margin-right: unset;
+  }
+}
