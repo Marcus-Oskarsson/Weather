@@ -14,6 +14,7 @@ export function getQuestions({
   difficulty = "easy",
   type = "multiple",
 } = {}) {
+  // Border fixa med token redan här. getSessionToken()
   return get(
     `amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`
   );
@@ -131,12 +132,12 @@ export async function getTotalScore() {
     var res = await fetch("http://localhost:3001/");
     var data = await res.json();
   } catch (error) {
-    onError(error);
     // Just nu bara en fil
+    // onError(error);
     var data = stats;
+  } finally {
+    return data;
   }
-
-  return data;
 }
 
 function onError(error) {
