@@ -21,6 +21,7 @@ function addVideoSrc(weatherName, element) {
     "Rain",
     "Snow",
     "Thunderstorm",
+    "unknown",
   ];
 
   if (weatherClasses.includes(weatherName)) {
