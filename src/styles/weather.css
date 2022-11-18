@@ -5,8 +5,8 @@
 
   /* KLAR */
   /* --clouds-bg-color: rgba(236, 236, 236, 0.35); */
-  --clouds-bg-color: rgba(236, 236, 236, 0.35);
-  --clouds-text-color: #010101;
+  --clouds-bg-color: rgba(14, 14, 14, 0.35);
+  --clouds-text-color: #efefef;
 
   /* KANSKE */
   --drizzle-bg-color: rgba(14, 14, 14, 0.45);
@@ -178,6 +178,11 @@ article > p:first-of-type {
 .thunderstorm {
   background-color: var(--thunderstorm-bg-color);
   color: var(--thunderstorm-text-color);
+}
+
+.unknown {
+  background-color: var(--clear-bg-color);
+  color: var(--clear-text-color);
 }
 
 @media (min-width: 598px) {

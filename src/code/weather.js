@@ -21,6 +21,7 @@ function addVideoSrc(weatherName, element) {
     "Rain",
     "Snow",
     "Thunderstorm",
+    "unknown",
   ];
 
   if (weatherClasses.includes(weatherName)) {
@@ -45,7 +46,6 @@ function getCityFromLocalStorage() {
 }
 
 function getHourAndMinutes(date) {
-  console.log("here");
   return `${("0" + date.getHours()).slice(-2)}:${(
     "0" + date.getMinutes()
   ).slice(-2)}`;
@@ -89,9 +89,11 @@ function fetchWeather(city) {
 
   Promise.all([weather, weatherForecast]).then((values) => {
     printWeather(...values);
+
+    const ONE_MINUTE = 60000;
     let i = setInterval(() => {
       printWeather(...values);
-    }, 60000);
+    }, ONE_MINUTE);
   });
 }
 

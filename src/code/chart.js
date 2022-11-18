@@ -18,6 +18,7 @@ export async function showChart(score) {
     return (category.points / category.totalQuestions || 0) * 100;
   });
 
+  // Build startingScore object
   let startingScore = {};
   categories.forEach((c) => {
     startingScore[c.name] = {
@@ -27,8 +28,11 @@ export async function showChart(score) {
   });
 
   let totalScore = JSON.parse(localStorage.getItem("score")) || startingScore;
-  totalScore[score.name].points += score.points;
-  totalScore[score.name].totalQuestions += score.totalQuestions;
+  // If chart is called after game it has score otherwise not
+  if (score) {
+    totalScore[score.name].points += score.points;
+    totalScore[score.name].totalQuestions += score.totalQuestions;
+  }
   localStorage.setItem("score", JSON.stringify(totalScore));
 
   let stats = Object.values(totalScore).map((category) => {
@@ -88,7 +92,7 @@ export async function showChart(score) {
     options,
   });
 
-  let gameBoard = getElementById("game-board");
+  let gameBoard = getElementById("game-board") || getElementById("stats-board");
   let wrapper = createElement("div");
   appendChildToElement(wrapper)(chart);
   addClassToElement(wrapper)("chart-wrapper");
