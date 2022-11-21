@@ -65,6 +65,15 @@ form > input {
   max-width: 80%;
 }
 
+form > input:hover::placeholder,
+form > input:focus::placeholder {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+form > input:hover {
+  caret-color: #fff;
+}
+
 form > button {
   border: none;
   border-bottom: 2px solid #efefef;
