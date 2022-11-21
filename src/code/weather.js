@@ -148,10 +148,6 @@ async function printWeather(weather, weatherForecast) {
 
   const weatherName = weather.weather[0].main;
   addVideoSrc(weatherName, source);
-
-  // Border redigera videon istället
-  if (weatherName === "Clouds") video.playbackRate = 0.75;
-
   appendChildToElement(video)(source);
 
   let main = getElementById("main");
