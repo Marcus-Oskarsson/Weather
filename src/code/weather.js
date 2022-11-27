@@ -89,11 +89,6 @@ function fetchWeather(city) {
 
   Promise.all([weather, weatherForecast]).then((values) => {
     printWeather(...values);
-
-    const ONE_MINUTE = 60000;
-    let i = setInterval(() => {
-      printWeather(...values);
-    }, ONE_MINUTE);
   });
 }
 
@@ -118,6 +113,11 @@ async function printWeather(weather, weatherForecast) {
     feelsLikeRoundedStr,
     getTimeAndDate()
   );
+
+  const ONE_MINUTE = 60000;
+  let i = setInterval(() => {
+    todaysDate.textContent = getTimeAndDate();
+  }, ONE_MINUTE);
 
   let icon = createElement("img");
   let addAttributToIcon = addAttributeToElement(icon);
