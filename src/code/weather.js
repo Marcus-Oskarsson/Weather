@@ -61,7 +61,7 @@ function getTimeAndDate() {
 }
 
 async function handleFormSubmit() {
-  let cityName = getElementAttributById("city-search")("value");
+  const cityName = getElementAttributById("city-search")("value");
 
   if (cityName) setCityToLocalStorage(cityName);
   location.reload();
@@ -72,7 +72,6 @@ async function getLocation() {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     const city = await getCity(longitude, latitude);
-    console.log("here is city: ", city);
     return city;
   }
 
@@ -91,11 +90,19 @@ async function main() {
   addAttributeToElement(input)("placeholder")(cityCapitalized);
   fetchWeather(city);
 
+  let searchBar = getElementById("city-search");
+  let locationIcon = getElementById("location");
   let form = getElementById("search-city");
   let main = getElementById("main");
 
   // Sets focus on content
   main.scrollIntoView({ behavior: "smooth" });
+
+  locationIcon.addEventListener("click", async () => {
+    const city = await getLocation();
+    searchBar.value = city;
+    handleFormSubmit();
+  });
   form.addEventListener("submit", handleFormSubmit);
 }
 

@@ -12,6 +12,10 @@
       size="18x18"
       type="image/png"
     />
+    <script
+      src="https://kit.fontawesome.com/68478c3891.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="./code/weather.js" type="module"></script>
     <title>Weather</title>
@@ -21,9 +25,13 @@
       <form action="#" id="search-city">
         <!-- <label for="city-search">Stad</label> -->
         <input id="city-search" type="text" placeholder="Stad" />
+
         <!-- <label for="remember">Kom ihåg</label>
         <input type="checkbox" name="remember" id="remember" /> -->
-        <button id="city-search-btn" type="submit">Search</button>
+        <i class="fa-solid fa-location-crosshairs" id="location"></i>
+        <button id="city-search-btn" type="submit">
+          <i class="fa-solid fa-search"></i>
+        </button>
       </form>
       <video autoplay class="hero" id="video" loop muted></video>
       <article id="weather-article"></article>

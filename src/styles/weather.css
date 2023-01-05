@@ -147,6 +147,14 @@ article > p:first-of-type {
   align-self: flex-end;
 }
 
+#location {
+  color: var(--clear-text-color);
+  padding-bottom: auto;
+  line-height: 44px;
+  cursor: pointer;
+  border-bottom: 2px solid #fff;
+}
+
 /* Wrappers för väder */
 .clear {
   background-color: var(--clear-bg-color);
