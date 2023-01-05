@@ -66,7 +66,7 @@ async function handleFormSubmit() {
   location.reload();
 }
 
-async function main() {
+function main() {
   let city = getCityFromLocalStorage() || "Göteborg";
   let input = getElementById("city-search");
   input.value = "";
@@ -92,7 +92,7 @@ function fetchWeather(city) {
   });
 }
 
-async function printWeather(weather, weatherForecast) {
+function printWeather(weather, weatherForecast) {
   let weatherWrapper = getElementById("weather-article");
   cleanWrapper(weatherWrapper);
 
@@ -120,11 +120,11 @@ async function printWeather(weather, weatherForecast) {
   }, ONE_MINUTE);
 
   let icon = createElement("img");
-  let addAttributToIcon = addAttributeToElement(icon);
+  let addAttributeToIcon = addAttributeToElement(icon);
 
   const iconLink = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-  addAttributToIcon("src")(iconLink);
-  addAttributToIcon("alt")(weatherDescriptionFormated);
+  addAttributeToIcon("src")(iconLink);
+  addAttributeToIcon("alt")(weatherDescriptionFormated);
 
   let cityName = createElementWithText("h1")(weather.name);
   let leftWrapper = createElement("div");
