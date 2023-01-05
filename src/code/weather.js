@@ -1,4 +1,5 @@
 import { getWeather, getWeatherForecast } from "./api/weatherApi.js";
+import { getCity } from "./api/geoLocaitonApi.js";
 import {
   addAttributeToElement,
   addClassToElement,
@@ -66,7 +67,22 @@ async function handleFormSubmit() {
   location.reload();
 }
 
-function main() {
+async function getLocation() {
+  async function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const city = await getCity(longitude, latitude);
+    console.log("here is city: ", city);
+    return city;
+  }
+
+  const getCoordinatesPosition = new Promise((res, rej) => {
+    navigator.geolocation.getCurrentPosition(res);
+  });
+  return success(await getCoordinatesPosition);
+}
+
+async function main() {
   let city = getCityFromLocalStorage() || "Göteborg";
   let input = getElementById("city-search");
   input.value = "";
