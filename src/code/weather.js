@@ -1,4 +1,5 @@
 import { getWeather, getWeatherForecast } from "./api/weatherApi.js";
+import { getCity } from "./api/geoLocaitonApi.js";
 import {
   addAttributeToElement,
   addClassToElement,
@@ -60,10 +61,24 @@ function getTimeAndDate() {
 }
 
 async function handleFormSubmit() {
-  let cityName = getElementAttributById("city-search")("value");
+  const cityName = getElementAttributById("city-search")("value");
 
   if (cityName) setCityToLocalStorage(cityName);
   location.reload();
+}
+
+async function getLocation() {
+  async function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const city = await getCity(longitude, latitude);
+    return city;
+  }
+
+  const getCoordinatesPosition = new Promise((res, rej) => {
+    navigator.geolocation.getCurrentPosition(res);
+  });
+  return success(await getCoordinatesPosition);
 }
 
 async function main() {
@@ -75,11 +90,19 @@ async function main() {
   addAttributeToElement(input)("placeholder")(cityCapitalized);
   fetchWeather(city);
 
+  let searchBar = getElementById("city-search");
+  let locationIcon = getElementById("location");
   let form = getElementById("search-city");
   let main = getElementById("main");
 
   // Sets focus on content
   main.scrollIntoView({ behavior: "smooth" });
+
+  locationIcon.addEventListener("click", async () => {
+    const city = await getLocation();
+    searchBar.value = city;
+    handleFormSubmit();
+  });
   form.addEventListener("submit", handleFormSubmit);
 }
 
@@ -92,7 +115,7 @@ function fetchWeather(city) {
   });
 }
 
-async function printWeather(weather, weatherForecast) {
+function printWeather(weather, weatherForecast) {
   let weatherWrapper = getElementById("weather-article");
   cleanWrapper(weatherWrapper);
 
@@ -120,11 +143,11 @@ async function printWeather(weather, weatherForecast) {
   }, ONE_MINUTE);
 
   let icon = createElement("img");
-  let addAttributToIcon = addAttributeToElement(icon);
+  let addAttributeToIcon = addAttributeToElement(icon);
 
   const iconLink = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-  addAttributToIcon("src")(iconLink);
-  addAttributToIcon("alt")(weatherDescriptionFormated);
+  addAttributeToIcon("src")(iconLink);
+  addAttributeToIcon("alt")(weatherDescriptionFormated);
 
   let cityName = createElementWithText("h1")(weather.name);
   let leftWrapper = createElement("div");
