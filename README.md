@@ -30,5 +30,5 @@ In addition to searching for a specific city, the weather app also allows users 
 - Handle user interaction with eventListeners.
 - Visualize information using chart.js or similar libraries.
 
-## Future improvements" 
+## Future improvements
 - Video sizes are too big, needs a fix. Could use an image as background while video is loading.
