@@ -8,10 +8,10 @@ Weather app. School project: JavaScript @ IT-Högskolan
 - CSS
 
 ## View the website live
-[https://weather-app-native-javascript.netlify.app](https://weather-app-native-javascript.netlify.app)
+[View it live](https://weather-app-native-javascript.netlify.app)
 
 ## Description
-A website that displays the current weather. Weather are fetched from [OpenWeather API](https://openweathermap.org/api) and the user gets to search for a city. The weather is presented in a simple line chart built with [Chart.js](chartjs.org/).
+A website that displays the current weather. The weather data is fetched from [OpenWeather API](https://openweathermap.org/api) and the user gets to search for a city. The weather is presented in a simple line chart built with [Chart.js](chartjs.org/).
 
 ## Key Features
 ### Weather Search
@@ -31,4 +31,4 @@ In addition to searching for a specific city, the weather app also allows users 
 - Visualize information using chart.js or similar libraries.
 
 ## Future improvements
-- Video sizes are too big, needs a fix. Could use an image as background while video is loading.
+- Video sizes are too big and need a fix. Could use an image as a background while the video is loading.
