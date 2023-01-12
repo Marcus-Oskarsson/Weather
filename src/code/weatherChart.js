@@ -2,7 +2,7 @@ import { addAttributeToElement, createElement } from "./helperFunctions.js";
 
 export function createWeatherCanvas(weatherForecast) {
   let canvas = createElement("canvas");
-  addAttributeToElement(canvas)("id")("weather-chart");
+  canvas.setAttribute("id", "weather-chart");
 
   weatherForecast.list = weatherForecast.list.filter(
     (weather) =>
