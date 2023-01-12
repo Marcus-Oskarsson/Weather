@@ -1,4 +1,4 @@
-import { getWeather, getWeatherForecast } from "./api/weatherApi.js";
+import { getWeatherAndForecast } from "./api/weatherApi.js";
 import { getCity } from "./api/geoLocaitonApi.js";
 import {
   addAttributeToElement,
@@ -14,7 +14,7 @@ import { createWeatherCanvas } from "./weatherChart.js";
 
 main();
 
-function addVideoSrc(weatherName, element) {
+function addVideoSrcToElement(weatherName, element) {
   const weatherClasses = [
     "Clear",
     "Clouds",
@@ -34,12 +34,20 @@ function addVideoSrc(weatherName, element) {
   }
 }
 
-function capitalizeFirstLetter(str) {
+function capitalizeFirstCharacter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function cleanWrapper(wrapper) {
+function clearWrapper(wrapper) {
   wrapper.innerHTML = "";
+}
+
+function fetchAndPrintWeather(city) {
+  let { weather, weatherForecast } = getWeatherAndForecast(city);
+
+  Promise.all([weather, weatherForecast]).then((values) => {
+    printWeather(...values);
+  });
 }
 
 function getCityFromLocalStorage() {
@@ -67,6 +75,13 @@ async function handleFormSubmit() {
   location.reload();
 }
 
+async function handleLocationIconClick() {
+  const city = await getLocation();
+  let searchBar = getElementById("city-search");
+  searchBar.value = city;
+  handleFormSubmit();
+}
+
 async function getLocation() {
   async function success(position) {
     const latitude = position.coords.latitude;
@@ -83,43 +98,31 @@ async function getLocation() {
 
 async function main() {
   let city = getCityFromLocalStorage() || "Göteborg";
+
   let input = getElementById("city-search");
   input.value = "";
   input.focus();
-  let cityCapitalized = capitalizeFirstLetter(city);
-  addAttributeToElement(input)("placeholder")(cityCapitalized);
-  fetchWeather(city);
 
-  let searchBar = getElementById("city-search");
-  let locationIcon = getElementById("location");
-  let form = getElementById("search-city");
-  let main = getElementById("main");
+  let cityCapitalized = capitalizeFirstCharacter(city);
+  input.setAttribute("placeholder", cityCapitalized);
+  fetchAndPrintWeather(city);
 
   // Sets focus on content
+  let main = getElementById("main");
   main.scrollIntoView({ behavior: "smooth" });
 
-  locationIcon.addEventListener("click", async () => {
-    const city = await getLocation();
-    searchBar.value = city;
-    handleFormSubmit();
-  });
+  let locationIcon = getElementById("location");
+  locationIcon.addEventListener("click", handleLocationIconClick);
+
+  let form = getElementById("search-city");
   form.addEventListener("submit", handleFormSubmit);
-}
-
-function fetchWeather(city) {
-  let weather = getWeather(city);
-  let weatherForecast = getWeatherForecast(city);
-
-  Promise.all([weather, weatherForecast]).then((values) => {
-    printWeather(...values);
-  });
 }
 
 function printWeather(weather, weatherForecast) {
   let weatherWrapper = getElementById("weather-article");
-  cleanWrapper(weatherWrapper);
+  clearWrapper(weatherWrapper);
 
-  const weatherDescriptionFormated = capitalizeFirstLetter(
+  const weatherDescriptionFormated = capitalizeFirstCharacter(
     weather.weather[0].description
   );
   const tempRoundedStr = `${Math.round(weather.main.temp)}°C`;
@@ -143,18 +146,18 @@ function printWeather(weather, weatherForecast) {
   }, ONE_MINUTE);
 
   let icon = createElement("img");
-  let addAttributeToIcon = addAttributeToElement(icon);
+  // let addAttributeToIcon = addAttributeToElement(icon);
 
   const iconLink = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
-  addAttributeToIcon("src")(iconLink);
-  addAttributeToIcon("alt")(weatherDescriptionFormated);
+  icon.setAttribute("src", iconLink);
+  icon.setAttribute("alt", weatherDescriptionFormated);
 
   let cityName = createElementWithText("h1")(weather.name);
   let leftWrapper = createElement("div");
   let rightWrapper = createElement("div");
 
-  addClassToElement(leftWrapper)("left-wrapper");
-  addClassToElement(rightWrapper)("right-wrapper");
+  leftWrapper.classList.add("left-wrapper");
+  rightWrapper.classList.add("right-wrapper");
 
   appendChildToElement(leftWrapper)(temp, feelsLike);
   appendChildToElement(rightWrapper)(icon, weatherTitle);
@@ -170,14 +173,14 @@ function printWeather(weather, weatherForecast) {
   let source = createElement("source");
 
   const weatherName = weather.weather[0].main;
-  addVideoSrc(weatherName, source);
+  addVideoSrcToElement(weatherName, source);
   appendChildToElement(video)(source);
 
   let main = getElementById("main");
   appendChildToElement(main)(video);
 
   weatherWrapper.removeAttribute("class");
-  addClassToElement(weatherWrapper)(weatherName.toLowerCase());
+  weatherWrapper.classList.add(weatherName.toLowerCase());
 
   let canvas = createWeatherCanvas(weatherForecast);
 
