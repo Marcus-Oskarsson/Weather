@@ -15,7 +15,7 @@ A website that displays the current weather. Weather are fetched from [OpenWeath
 
 ## Key Features
 ### Weather Search
-One of the key features of our weather app is the ability for users to search for a specific city and view the current weather conditions. The weather data is fetched from OpenWeather API and presented to the user in a simple line chart built with Chart.js. The line chart allows users to easily view temperature over time, making it easy to understand the weather conditions. To search for a city, the user can enter the city name in the search bar and hit the search button, the weather data will be displayed in the chart.
+One of the key features of my weather app is the ability for users to search for a specific city and view the current weather conditions. The weather data is fetched from OpenWeather API and presented to the user in a simple line chart built with Chart.js. The line chart allows users to easily view temperature over time, making it easy to understand the weather conditions. To search for a city, the user can enter the city name in the search bar and hit the search button, the weather data will be displayed in the chart.
 
 ### Current Location Weather
 In addition to searching for a specific city, the weather app also allows users to view the weather for their current location by using the Geolocation API. This feature allows users to easily view the weather for their current location, without having to manually search for it.
